@@ -19,8 +19,8 @@ print("Starting model retraining script...")
 DATA_DIR = 'true1'
 
 # The names of your CSV files
-FAKE_NEWS_CSV = 'Fake.csv' # <<<--- UPDATED TO 'Fake.csv'
-TRUE_NEWS_CSV = 'True.csv' # <<<--- UPDATED TO 'True.csv'
+FAKE_NEWS_CSV = 'Fake.csv'
+TRUE_NEWS_CSV = 'True.csv'
 
 # Column names in your CSV files. Please change these if they are different.
 TEXT_COLUMN = 'text' 
