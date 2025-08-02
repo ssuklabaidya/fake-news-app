@@ -54,28 +54,20 @@ if st.button("Analyze News", type="primary"):
         # Vectorize the input using the trained vectorizer
         vectorized_input = vectorizer.transform([processed_input])
 
-        # Get the prediction from the model
-        prediction = model.predict(vectorized_input)
-        
         # Get the prediction probabilities
         probabilities = model.predict_proba(vectorized_input)
-        fake_prob = probabilities[0][0]
-        real_prob = probabilities[0][1]
-
-        # --- IMPORTANT FIX HERE ---
-        # The model seems to have inverted labels. Let's fix the output display.
-        # Original model: 0 is Fake, 1 is Real.
-        # But based on your results, it's predicting 0 for Real and 1 for Fake.
-        # We will adjust the display logic to match the observed behavior.
         
-        if prediction[0] == 0:
+        # Get the confidence for each class
+        # The order of classes in model.classes_ is ['Fake', 'Real']
+        # This code will use the probability with the highest value
+        confidence_fake = probabilities[0][0] * 100
+        confidence_real = probabilities[0][1] * 100
+        
+        # Determine the result based on the highest confidence
+        if confidence_real > confidence_fake:
             result = "Real News"
-            confidence_real = real_prob * 100
-            confidence_fake = fake_prob * 100
         else:
             result = "Fake News"
-            confidence_real = real_prob * 100
-            confidence_fake = fake_prob * 100
 
         # Display the result with confidence scores
         st.markdown(f"### Prediction: :green[{result}]" if result == "Real News" else f"### Prediction: :red[{result}]")
