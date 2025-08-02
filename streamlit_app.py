@@ -55,28 +55,36 @@ if st.button("Analyze News", type="primary"):
         vectorized_input = vectorizer.transform([processed_input])
 
         # Get the prediction probabilities
-        probabilities = model.predict_proba(vectorized_input)
+        probabilities = model.predict_proba(vectorized_input)[0]
         
-        # Get the confidence for each class
-        # The order of classes in model.classes_ is ['Fake', 'Real']
-        # This code will use the probability with the highest value
-        confidence_fake = probabilities[0][0] * 100
-        confidence_real = probabilities[0][1] * 100
-        
-        # Determine the result based on the highest confidence
-        if confidence_real > confidence_fake:
-            result = "Real News"
-        else:
-            result = "Fake News"
+        # Get the class labels from the model
+        class_labels = model.classes_
+        st.write(f"Model class order: {class_labels}")  # Debugging output
+
+        # Map probabilities to class labels dynamically
+        class_prob_dict = dict(zip(class_labels, probabilities))
+        confidence_fake = class_prob_dict.get('Fake', 0) * 100
+        confidence_real = class_prob_dict.get('Real', 0) * 100
+
+        # Determine the result based on the highest probability
+        predicted_class = max(class_prob_dict, key=class_prob_dict.get)
+        confidence = class_prob_dict[predicted_class] * 100
 
         # Display the result with confidence scores
-        st.markdown(f"### Prediction: :green[{result}]" if result == "Real News" else f"### Prediction: :red[{result}]")
+        st.markdown(f"### Prediction: :green[{predicted_class}]" if predicted_class == "Real" else f"### Prediction: :red[{predicted_class}]")
         st.markdown(f"Confidence: Real News - {confidence_real:.2f}% | Fake News - {confidence_fake:.2f}%")
+        
+        # Optional: Warn if confidence is low
+        if confidence < 60:
+            st.warning("The prediction confidence is low. The result may be uncertain.")
+        
         st.markdown("---")
+        
+        # Debugging: Show processed input
+        st.markdown("**Processed Input (for debugging):**")
+        st.write(processed_input)
 
     else:
         st.warning("Please enter some text to analyze.")
 
 st.caption("Powered by Streamlit and your trained machine learning model.")
-
-
