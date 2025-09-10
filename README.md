@@ -10,6 +10,7 @@ The app is built to be user-friendly, allowing anyone to quickly check the credi
 Experience the app in action! It's deployed and ready to use.
 
 Visit the Live App
+https://fake-news-app-78hne8lne4ydepxowinubx.streamlit.app/
 
 
 📝 Project Overview
@@ -66,29 +67,6 @@ Run the Streamlit application:
 Bash
 streamlit run streamlit_app.py
 The app will open in your web browser at http://localhost:8501.
-
-
-🤝 Contributing
-Should you add this?
-
-Yes, you should! The "Contributing" section is standard for most GitHub projects. It shows that you are open to help and allows other developers to easily contribute to your project. You can think of it as a guide for others who want to improve your app.
-
-Here's the contributing section again. You can copy and paste it as it is:
-
-Fork the repository.
-
-Create your feature branch:
-
-Bash
-git checkout -b feature/your-feature-name
-Commit your changes:
-
-Bash
-git commit -m 'Add a short description of your changes'
-Push to the branch:
-
-Bash
-git push origin feature/your-feature-name
 
 
 📄 License
